@@ -87,9 +87,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking updateBooking(Long id, BookingStatus status) {
-        Booking opt = repository.findById(id).orElse(null);
+        Booking opt = repository.findById(id).orElseThrow(() -> new RuntimeException("Booking id not found for updation"));
         opt.setBookingStatus(status);
-
         return repository.save(opt);
     }
 
@@ -111,7 +110,9 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public SalonReport getReportsBySalonId(Long id) {
         List<Booking> booking = repository.findBySalonId(id);
-        Double totalEarning = booking.stream().mapToDouble(Booking::getTotalPrices).sum();
+        Double totalEarning = booking.stream()
+                        .filter(confirm-> BookingStatus.CONFIRMED.equals(confirm.getBookingStatus()))
+                .mapToDouble(Booking::getTotalPrices).sum();
 
         Integer totalBookings = booking.size();
 

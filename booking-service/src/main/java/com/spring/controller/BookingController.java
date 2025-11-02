@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
@@ -29,11 +31,11 @@ public class BookingController
     public ResponseEntity<Booking> createBooking(
     @RequestBody BookingRequest bookingRequest) throws Exception {
         UserDTO userDTO=new UserDTO();
-        userDTO.setUserId(1L);
+        userDTO.setUserId(2L);
         SalonDTO salonDTO=new SalonDTO();
         salonDTO.setId(1L);
         salonDTO.setOpenAt(LocalTime.now());
-        salonDTO.setCloseAt(LocalTime.now().plusHours(12));
+        salonDTO.setCloseAt(LocalTime.now().plusHours(10));
         Set<ServiceDTO> set=new HashSet<>();
         ServiceDTO serviceDTO=new ServiceDTO();
         serviceDTO.setName("hair cut");
@@ -76,13 +78,22 @@ public class BookingController
     }
 
     @GetMapping("/reports/{id}")
-    public ResponseEntity<SalonReport> getSalonReports(Long id)
+    public ResponseEntity<SalonReport> getSalonReports(@PathVariable  Long id)
     {
 
         SalonReport report=service.getReportsBySalonId(id);
         return new ResponseEntity<>(report,HttpStatus.OK);
     }
 
+    @GetMapping("/date/{id}")
+    public ResponseEntity<List<Booking>> getBookingsByDate(
+            @PathVariable Long id,
+            @RequestParam LocalDate date
+            )
+    {
+        List<Booking> list=service.getBookingsByDate(id,date);
+        return new ResponseEntity<>(list,HttpStatus.CREATED);
+    }
 
 
 
