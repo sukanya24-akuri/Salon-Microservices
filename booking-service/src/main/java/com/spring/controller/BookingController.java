@@ -31,7 +31,7 @@ public class BookingController
     public ResponseEntity<Booking> createBooking(
     @RequestBody BookingRequest bookingRequest) throws Exception {
         UserDTO userDTO=new UserDTO();
-        userDTO.setUserId(2L);
+        userDTO.setUserId(1L);
         SalonDTO salonDTO=new SalonDTO();
         salonDTO.setId(1L);
         salonDTO.setOpenAt(LocalTime.now());
