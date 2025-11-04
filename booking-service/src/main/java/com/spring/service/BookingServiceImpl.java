@@ -52,7 +52,7 @@ public class BookingServiceImpl implements BookingService {
         LocalDateTime salonOpenTime = salonDTO.getOpenAt().atDate(bookingStartTime.toLocalDate());
         LocalDateTime salonEndTime = salonDTO.getCloseAt().atDate(bookingEndTime.toLocalDate());
         List<Booking> existingBookings = getBookingsBySalonId(salonDTO.getId());
-        if (bookingStartTime.equals(salonEndTime) && bookingStartTime.isBefore(salonOpenTime) || bookingEndTime.isAfter(salonEndTime)) {
+        if (bookingStartTime.equals(salonEndTime) || bookingStartTime.isBefore(salonOpenTime) || bookingEndTime.isAfter(salonEndTime)) {
             throw new Exception("slot your service within salon's timings");
         }
         for (Booking existingBooking : existingBookings) {
