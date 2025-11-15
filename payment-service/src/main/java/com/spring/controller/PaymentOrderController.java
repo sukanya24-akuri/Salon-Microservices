@@ -6,6 +6,7 @@ import com.spring.dto.BookingDTO;
 import com.spring.dto.UserDTO;
 import com.spring.entity.PaymentOrder;
 import com.spring.payload.response.PaymentLinkResponse;
+import com.spring.service.PaymentOrderImpl;
 import com.spring.service.PaymentOrderService;
 import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PaymentOrderController
 {
-    private final PaymentOrderService service;
+    private final PaymentOrderImpl service;
 
     @PostMapping("/create")
     public ResponseEntity<PaymentLinkResponse> createPayment(

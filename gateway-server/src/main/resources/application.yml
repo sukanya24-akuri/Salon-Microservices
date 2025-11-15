@@ -1,0 +1,45 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway-server
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+
+          routes:
+            - id: USER-SERVICE
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/user/**
+
+            - id: SERVICE-OFFERS
+              uri: lb://SERVICE-OFFERS
+              predicates:
+                - Path=/offers/**,/salon/owner/**
+
+            - id: CATEGORY-SERVICE
+              uri: lb://CATEGORY-SERVICE
+              predicates:
+                - Path=/category/**,/salon/owner/**
+
+            - id: BOOKING-SERVICE
+              uri: lb://BOOKING-SERVICE
+              predicates:
+                - Path=/booking/**
+
+            - id: SALON-SERVICE
+              uri: lb://SALON-SERVICE
+              predicates:
+                - Path=/salon/**
+
+            - id: PAYMENT-SERVICE
+              uri: lb://PAYMENT-SERVICE
+              predicates:
+                - Path=/payment/**

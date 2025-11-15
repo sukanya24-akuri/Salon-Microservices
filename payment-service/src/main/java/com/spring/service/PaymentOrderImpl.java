@@ -27,7 +27,7 @@ public class PaymentOrderImpl implements PaymentOrderService {
 
     private final PaymentOrderRepository repository;
 
-    @Value("${razorpay.api.id}")
+    @Value("${razorpay.api.key}")
     private String RAZORPAY_ID;
     @Value("${razorpay.api.secret}")
     private String RAZORPAY_SECRET_KEY;
